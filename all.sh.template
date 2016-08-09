@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Setup Python virtualenv
+echo "Setting up Python virtualenv..."
+eval "virtualenv ."
+eval "source bin/activate"
+echo "Python virtualenv setup successfully."
+
+LOGS="./log/poke/"
+
+mkdir -p $LOGS
+USERS=("USER_NAME_TEMPLATE")
+
+
+for item in ${USERS[*]}
+do
+  echo "Starting " ${item}
+  python pokecli.py --config "configs/"${item}.json > $LOGS/${item}.log 2>&1   &
+done
+
